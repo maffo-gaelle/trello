@@ -1,0 +1,43 @@
+<div class="page">
+    <h1>{{ title }}</h1>
+    <div class="flex">
+        <div class="col-sm-12">
+            <ul class="navbar-nav flex-grow ml-auto">
+                <li>
+                    <button mat-button [matMenuTriggerFor]="beforeMenu">Members</button>
+                    <mat-menu #beforeMenu="matMenu" xPosition="before">
+                        <button mat-menu-item *ngFor="let u of users; let i = index " [matMenuTriggerFor]="hel">
+                            <mat-menu #hel="matMenu">
+                                <button mat-menu-item ><mat-icon>remove</mat-icon><span>Remove from team</span></button>
+                    </mat-menu><span>{{ u.pseudo }}</span>
+                    </button>
+                    <button mat-menu-item [matMenuTriggerFor]="notMembers" (mouseenter)="getUsersNotInTeam()"><mat-icon>add</mat-icon><span>Add member</span></button>
+                    </mat-menu>
+                </li>
+            </ul>
+            <mat-form-field>
+                <input matInput (keyup)="filterChanged($event.target.value)" placeholder="Filter" appSetFocus>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="card-container">
+        <mat-card class="card" *ngFor='let user of users'>
+            <mat-card-header class="card-header">
+                <!-- <div mat-card-avatar class="example-header-image">{{ (ifPicturePath() ? {{ picturePath }} : {{ tempPicturePath }}) }}</div> -->
+                <div mat-card-avatar class="example-header-image" [style.background-size]="'cover'" [style.background-image]="'url('+ (user.picturePath || 'uploads/unknown-user.jpg') + ')'"></div>
+                <mat-card-title>{{ user.pseudo }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="card-content">
+                <p>Email: {{ user.email }}</p>
+                <p>First Name: {{ user.firstName }}</p>
+                <p>Last Name: {{ user.lastName }}</p>
+                <p *ngIf='showBirthdate(user)'>BirthDate: {{ user.birthDate }}</p>
+                <p>Role: {{ user.roleAsString }}</p>
+            </mat-card-content>
+            <mat-card-actions class="footer">
+                <button mat-icon-button tabindex="-1"><mat-icon (click)="remove(user)">delete</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

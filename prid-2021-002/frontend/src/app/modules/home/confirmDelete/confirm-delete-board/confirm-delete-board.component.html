@@ -1,0 +1,22 @@
+<div *ngIf="data.deleteboard == false" class="dialog">
+    <h1 mat-dialog-title>Reset "{{ this.data.board.title }}" Board</h1>
+    <div mat-dialog-content>
+        <p>Are you sure you want to remove all lists and cards of this board ? </p>
+        <p style="color: red;">This operation being irreversible! </p>
+    </div>
+    <div mat-dialog-actions class="dialog-button">
+        <button mat-button (click)=" onNoClick() " style="color: green;">Cancel</button>
+        <button mat-button (click)="onClick() " cdkFocusInitial style="color: red;">Reset</button>
+    </div>
+</div>
+<div *ngIf="data.deleteboard == true" class="dialog">
+    <h1 mat-dialog-title>Delete "{{ this.data.board.title }}" Board</h1>
+    <div mat-dialog-content>
+        <p>are you sure you want to delete this board?</p>
+        <p style="color: red;">This operation being irreversible!</p>
+    </div>
+    <div mat-dialog-actions class="dialog-button">
+        <button mat-button (click)=" onNoClick()" style="color: green;">Cancel</button>
+        <button mat-button (click)="onClick() " cdkFocusInitial style="color: red;">Delete</button>
+    </div>
+</div>

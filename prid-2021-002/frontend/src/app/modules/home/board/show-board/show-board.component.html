@@ -1,0 +1,205 @@
+<div>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="background-color: transparent;">
+
+        <div class="navbar-collapse collapse d-sm-inline-flex" *ngIf="currentUser?.role == 2 || currentUser.userId == board?.author.userId">
+            <ul class="navbar-nav">
+                <li>
+                    <h1 style="font-family: fantasy;"> {{ board?.title }}</h1>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav flex-grow ml-auto">
+                <li style="position: relative; margin-right: 100px;">
+                    <button mat-icon-button [routerLink]="['/boardlist']" aria-label="Example icon-button with a menu"><mat-icon>reply_all</mat-icon><span> Return to Tables</span></button>
+                </li>
+                <li>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" [routerLinkActive]='["link-active "]'>Board</button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="update(board)"><mat-icon>edit</mat-icon><span>Edit board</span></button>
+                        <button mat-menu-item (click)="createList()"><mat-icon>add</mat-icon><span> Add List</span></button>
+                        <button mat-menu-item (mouseenter)="getUsersNotCollaborators(board)" [matMenuTriggerFor]="notCollaborators"><mat-icon>person_add</mat-icon><span>Add new collaborator</span></button>
+                        <button mat-menu-item [matMenuTriggerFor]="person" *ngIf="board?.collaborators.length !=0"><mat-icon>person_remove</mat-icon><span>Remove collaborator</span></button>
+                        <button mat-menu-item *ngIf="board?.lists.length != 0" (click)="resetBoard()"><mat-icon>delete_outline</mat-icon><span>Reset All</span></button>
+                        <button mat-menu-item (click)="deleteBoard()"><mat-icon>remove</mat-icon><span>Delete board</span></button>
+                        <mat-menu #person="matMenu">
+                            <button mat-menu-item *ngFor="let c of board?.collaborators" (click)="removeCollaborator(c)"><mat-icon>remove</mat-icon><span>{{ c.pseudo }}</span></button>
+                        </mat-menu>
+                        <mat-menu #notCollaborators="matMenu" xPosition="before">
+                            <button mat-menu-item *ngFor="let c of notcollaborators" (click)="addCollaborator(c)"><mat-icon>add</mat-icon><span>add </span>{{ c.pseudo }}</button>
+                        </mat-menu>
+                    </mat-menu>
+                </li>
+                <li>
+                    <button mat-button [matMenuTriggerFor]="beforeMenu">Collaborators</button>
+                    <mat-menu #beforeMenu="matMenu" xPosition="before">
+                        <button mat-menu-item *ngFor="let c of board?.collaborators; let i = index " [matMenuTriggerFor]="hel">
+                            <mat-menu #hel="matMenu">
+                                <button mat-menu-item (click)="removeCollaborator(c)"><mat-icon>remove</mat-icon><span>Remove from board</span></button>
+                        <button mat-menu-item [matMenuTriggerFor]="deleteParticipant"><mat-icon>remove_red_eye</mat-icon>See activity</button>
+                    </mat-menu><span>{{ c.pseudo }}</span>
+                    <mat-menu #deleteParticipant="matMenu" xPosition="before" style="padding-right: 25px; padding-left:18px">
+                        <p style="padding-right: 25px; padding-left:18px">
+                            <mat-icon>person</mat-icon>{{ c.firstName }} {{ c.lastName }}</p>
+                        <p style="padding-right: 25px; padding-left:18px; text-decoration:underline;">Activity of collaborator</p>
+                        <ul style="padding-right: 25px; padding-left:18px">
+                            <li>Nombre de tableaux de l'utilisateur: <span>{{ c.boards.length}}</span></li>
+                            <li>Nombre de cartes de l'utilisateur: <span>{{ c.cards.length}}</span></li>
+                            <li>Nombre de collaborations de l'utilisateur: <span>{{ c.collaboratorsBoards.length}}</span></li>
+                        </ul>
+                    </mat-menu>
+                    </button>
+                    <button mat-menu-item [matMenuTriggerFor]="notCollaborators" (mouseenter)="getUsersNotCollaborators(board)"><mat-icon>person_add</mat-icon><span>Add collaborator</span></button>
+
+                    </mat-menu>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse d-sm-inline-flex" *ngIf="currentUser?.role != 2 && currentUser.userId != board?.author.userId">
+            <ul class="navbar-nav">
+                <li>
+                    <h1 style="font-family: fantasy;"> {{ board?.title }}</h1>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav flex-grow ml-auto">
+                <li style="position: relative; margin-right: 17px;">
+                    <span style="cursor: pointer;" *ngFor="let u of board?.collaborators" [matMenuTriggerFor]="viewCollaborator" #menuTrigger mat-icon-button class="btn-img" aria-label="Example icon-button with a menu">
+                    <mat-icon style="position: relative; padding: 6px;" *ngIf="u.picturePath == null">account_circle</mat-icon>
+                    <img *ngIf="u.picturePath != null" [src]=" u.picturePath " width="20" style="margin-bottom: 12px; "/>
+                    <mat-menu #viewCollaborator="matMenu" style="width:250">
+                      <p style="padding-right: 25px; padding-left:25px">
+                          <mat-icon>person</mat-icon>{{ u.firstName }} {{ u.lastName }}</p>
+                      <p style="padding-right: 25px; padding-left:25px">{{ u.email }}</p>
+                      <p style="padding-right: 25px; padding-left:25px">Collaborator</p>
+                    </mat-menu>
+                    </span>
+                    <span style="cursor: pointer;" mat-icon-button class="btn-img" [matMenuTriggerFor]="viewCollaborator" #menuTrigger aria-label="Example icon-button with a menu">
+                    <mat-icon style="position: relative; padding: 6px;" *ngIf="board?.author.picturePath == null">account_circle</mat-icon>
+                    <img *ngIf="board?.author.picturePath != null" [src]="board?.author.picturePath " width="20" style="margin-bottom: 12px; " title="{{ board?.author.pseudo }}"/>
+                    <mat-menu #viewCollaborator="matMenu" style="width:250px">
+                        <p style="padding-right: 25px; padding-left:25px">
+                            <mat-icon>person</mat-icon>{{ board?.author.firstName }} {{ board?.author.lastName }}</p>
+                        <p style="padding-right: 25px; padding-left:25px">{{ board?.author.email }}</p>
+                        <p style="padding-right: 25px; padding-left:25px">Author</p>
+                    </mat-menu></span>
+                </li>
+                <li style="position: relative; margin-right: 100px;">
+                    <button mat-icon-button [routerLink]="['/boardlist']" aria-label="Example icon-button with a menu"><mat-icon>reply_all</mat-icon><span> Return to Tables</span></button>
+                </li>
+                <li>
+                    <button mat-raised-button class="largeButton btn btn-primary" (click)="createList()">Add list</button>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div class="card-container">
+
+        <mat-card class="car" id="car" *ngFor="let l of lists " cdkDropListGroup>
+            <div class="flex">
+                <div>
+                    <h2>{{ l.title }}</h2>
+                </div>
+                <div>
+                    <button mat-icon-button aria-label="Example icon-button with a menu" (click)="moveLeft(l)" *ngIf="l.position != 0"><mat-icon class="icon-list">undo</mat-icon></button>
+                    <button mat-icon-button aria-label="Example icon-button with a menu" (click)="moveRigth(l)" *ngIf="l.position != lists.length - 1"><mat-icon class="icon-list">redo</mat-icon></button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"><mat-icon class="icon-list">drag_handle</mat-icon></button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="updateList(l)"><mat-icon>edit</mat-icon><span>Edit list</span></button>
+                        <button mat-menu-item [matMenuTriggerFor]="positions"><mat-icon>redo</mat-icon><span>Move to position</span></button>
+                        <button mat-menu-item [matMenuTriggerFor]="allCards"><mat-icon>keyboard_tab</mat-icon><span>Move all cards to</span></button>
+                        <button mat-menu-item (click)="deleteList(l)"><mat-icon>delete</mat-icon><span>Delete list</span></button>
+                        <button mat-menu-item disabled><mat-icon>sort</mat-icon><span>Filtered Cards</span></button>
+                        <mat-menu #allCards="matMenu">
+                            <button mat-menu-item *ngFor="let list of board?.lists" [disabled]="list.title == l.title" (click)="changeAllCards(l, list)"><mat-icon>add</mat-icon><span>{{ list.title }}</span></button>
+                        </mat-menu>
+                        <mat-menu #positions="matMenu">
+                            <button mat-menu-item *ngFor="let list of board?.lists; let i = index " (click)="changePositionList(l,i)" [disabled]="l.position == i"><span *ngIf="l.position > i">Before  {{ list.title }}</span><span *ngIf="l.position < i">After  {{ list.title }}</span><span *ngIf="l.position == i">{{ list.title }}</span></button>
+                        </mat-menu>
+                    </mat-menu>
+                </div>
+            </div>
+            <div cdkDropList [cdkDropListData]="l" class="example-list " (cdkDropListDropped)="drop($event, l)">
+                <div cdkDropList class="example-list " (cdkDropListDropped)="drop($event, l) ">
+                    <mat-card class="card-list " *ngFor="let c of l?.cards" [cdkDragData]="c " cdkDrag (dblclick)="DisplayDetailsOfCard(c)" style="cursor: pointer">
+
+                        <mat-card-hearder class="flex">
+                            <div>{{ c.title }}</div>
+                            <div>
+                                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"><mat-icon class="icon-card">expand_more</mat-icon></button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="openInputCard(c)"><mat-icon>edit</mat-icon><span>Edit Card</span></button>
+                                    <button mat-menu-item [matMenuTriggerFor]="listes"><mat-icon>redo</mat-icon><span>Move to list</span></button>
+                                    <button mat-menu-item [matMenuTriggerFor]="participants"><mat-icon>person_add</mat-icon><span>Add participant</span></button>
+                                    <button mat-menu-item (click)="deleteCard(c)"><mat-icon>delete</mat-icon><span>Delete Card</span></button>
+                                    <mat-menu #listes="matMenu">
+                                        <button mat-menu-item *ngFor="let list of board?.lists " [disabled]="list.title == l.title" (click)="changeCard(board, c, l, list)"><mat-icon>add</mat-icon><span>{{ list.title }}</span></button>
+                                    </mat-menu>
+                                    <mat-menu #participants="matMenu">
+                                        <!-- <button mat-menu-item *ngFor="let p of usersNotParticipantsCard(c) " (click)="addParticipant(c, p)"><mat-icon>add</mat-icon><span>{{ p.pseudo }} </span></button> -->
+                                        <button mat-menu-item *ngFor="let p of board?.collaborators " (click)="addParticipant(c, p)"><mat-icon>add</mat-icon><span>{{ p.pseudo }} </span></button>
+                                        <button mat-menu-item (click)="addParticipant(c, board.author)"><mat-icon>add</mat-icon><span>{{ board.author.pseudo }} </span></button>
+                                    </mat-menu>
+                                </mat-menu>
+                            </div>
+                        </mat-card-hearder>
+                        <mat-card-content>
+                            <!-- *ngIf="c?.collaborators.length != 0" (click)="removeParticipant(c, u)" -->
+                            <div>
+                                <button *ngFor="let u of c?.collaborators" [matMenuTriggerFor]="deleteParticipant" #menuTrigger mat-icon-button class="btn-img" aria-label="Example icon-button with a menu">
+                                  <mat-icon *ngIf="u.picturePath == null">account_circle</mat-icon>
+                                  <img *ngIf="u.picturePath != null" [src]=" u.picturePath " width="20" style="border-radius: 50%;" title="{{ u.pseudo }}"/>
+                                  <mat-menu #deleteParticipant="matMenu">
+                                    <p style="padding-right: 25px; padding-left:18px"><mat-icon>person</mat-icon>{{ u.firstName }} {{ u.lastName }}</p>
+                                    <p style="padding-right: 25px; padding-left:18px">{{ u.email }}</p>
+                                    <button style="padding-right: 25px; padding-left:25px" mat-menu-item (click)="removeParticipant(c, u)" style="text-decoration: underline; color: blue">Retirer de la carte</button>
+                                </mat-menu>
+                                </button>
+
+                            </div>
+                            <div *ngIf="c.openInput">
+                                <div class="form">
+                                    <mat-form-field class="example-width">
+                                        <input matInput type="text" [(ngModel)]="value" [formControl]="ctlTitle" required>
+                                        <mat-error class="field-error" *ngIf="ctlTitle.hasError('required')">Required</mat-error>
+                                        <mat-error class="field-error" *ngIf="ctlTitle.hasError('cardExists')">this card already exists in this board</mat-error>
+                                    </mat-form-field>
+                                    <div class="button-align">
+                                        <button mat-button matSuffix mat-icon-button aria-label="Clear" [disabled]="frm.pristine || frm.invalid || frm.pending " (click)="updateCard(c)"><mat-icon>edit</mat-icon>Edit</button>
+                                        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="CloseInputCard(c)">Cancel</button>
+                                        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''"><mat-icon>close</mat-icon></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="example-box card-list ">
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="card-list">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <mat-icon>add</mat-icon><span>Add new card</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="form">
+                                <mat-form-field class="example-width">
+                                    <input type="text" matInput style="width: 70px;" [formControl]="ctlTitle" required>
+                                    <mat-error class="field-error" *ngIf="ctlTitle.hasError('required')">Required</mat-error>
+                                    <mat-error class="field-error" *ngIf="ctlTitle.hasError('cardExists')">this card already exists in this board</mat-error>
+                                </mat-form-field>
+                                <div class="button-align">
+                                    <div>
+                                        <button [disabled]="frm.pristine || frm.invalid || frm.pending " mat-button color="primary" (click)="createCard(l)" style="width: 50px; margin-right:5px;"><mat-icon>add</mat-icon>Add </button>
+                                    </div>
+                                    <div>
+                                        <button mat-button color="primary" style="width: 50px"><mat-icon>clear</mat-icon>Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+
+                    </mat-card>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+
+    <div class=" row bloc1 ">
+        <div style="width: 50%; ">
+            <strong>Avec Trello, les équipes peuvent collaborer davantage et accomplir toujours plus de choses.</strong> Les tableaux, listes et cartes de Trello permettent aux équipes d 'organiser les projets et de définir leur ordre de priorité de façon
+            amusante, souple et enrichissante.
+            <br><button style="width: 180px; margin-top: 20px; " *ngIf="!currentUser" type="button" [routerLink]='["/signup"]' class="btn btn-primary">Enregistrez-vous</button>
+            <div *ngIf="currentUser"><button style="width: 180px; margin-top: 20px; margin-bottom: 20px; " type="button" [routerLink]='["/boardlist"]' class="btn btn-primary">Allez aux tableaux</button></div>
+        </div>
+        <div style="width: 30%; margin-left: 120px; ">
+            <img src="/assets/imgAccueil.PNG " alt="image-Accueil " width="450 " heigth="250 ">
+        </div>
+    </div>
+    <div class="row bloc2">
+        <div>
+            <img src="/assets/imageAccueil.PNG " alt="image-Accueil " width="450 " heigth="250 ">
+        </div>
+        <div style="width: 50%; ">
+            Collaborez avec toutes les équipes Que ce soit pour votre travail, pour un projet parallèle ou même pour vos prochaines vacances en famille, Trello aide votre équipe à rester organisée. <a class="nav-link" [routerLinkActive]="['link-active']"
+                style="text-decoration: underline " *ngIf="!currentUser" [routerLink]='["/login"]' style="color: blue ">Commencez à agir <mat-icon>login</mat-icon></a>
+        </div>
+
+    </div>
+</div>
+<app-footer></app-footer>

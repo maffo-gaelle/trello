@@ -1,0 +1,13 @@
+@import "src/style/_setting";
+@import "src/style/_colors";
+form {
+    @include form-align;
+}
+
+.title-form {
+    @include title-form-align
+}
+
+.buttonForm {
+    @include button-align;
+}

@@ -1,0 +1,21 @@
+<form id="frm" class="form" [formGroup]="frm" novalidate>
+    <h1 class="header">{{( !isNew ? 'Edit List' : 'Add List')}}</h1>
+    <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Title" [formControl]="ctlTitle" required>
+            <mat-error class="field-error" *ngIf="ctlTitle.hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="ctlTitle.hasError('listExists')">this list already exists</mat-error>
+        </mat-form-field>
+
+        <div class="footer ">
+            <button type="submit " mat-button form="frm " [disabled]="frm.pristine || frm.invalid || frm.pending " (click)="update() ">{{!isNew ? 'Update' : 'Add'}}</button>
+            <button type="reset " mat-button (click)="cancel() ">Cancel</button>
+        </div>
+    </div>
+</form>
+<!-- <pre>
+{{frm.value | json }}
+{{frm.invalid | json }}
+{{frm.pristine | json }}
+{{frm.pending | json }}
+</pre> -->

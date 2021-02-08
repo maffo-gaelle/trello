@@ -1,0 +1,37 @@
+@import "src/style/_setting";
+@import "src/style/_colors";
+.page {
+    background-color: $backgroundPage;
+}
+
+.card-container {
+    @include center-flex-align;
+}
+
+.card {
+    width: 23%;
+    margin: 5px;
+    height: 310px;
+    background-color: $colorCardContent;
+}
+
+.card-header {
+    background-color: $colorCardHeader;
+}
+
+.card-content {
+    background-color: $colorCardContent;
+}
+
+.largeButton {
+    background-color: $colorButton;
+}
+
+.footer {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}

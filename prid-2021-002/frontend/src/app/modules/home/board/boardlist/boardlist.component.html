@@ -1,0 +1,82 @@
+<div class="page">
+    <div class="row">
+        <div class="col-sm-6 btn-add">
+            <div class="col-12">
+                <button mat-raised-button class="largeButton btn btn-primary" (click)="create()">Add new Board</button>
+            </div>
+        </div>
+    </div>
+    <h1 *ngIf='allboards.length!=0'>All boards</h1>
+    <div class="card-container">
+        <mat-card class="card" *ngFor='let board of allboards '>
+            <div class="flex">
+                <div>
+                    <a class="nav-link text-dark" [routerLink]="['/show-board/'+board.boardId]">
+                        <mat-card-content class="card-content">
+                            <p>{{ board.title }}</p>
+                        </mat-card-content>
+                    </a>
+                </div>
+                <div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>toc</mat-icon></button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="['/show-board/' +board.boardId]"><mat-icon>remove_red_eye</mat-icon><span>show</span></button>
+                        <button mat-menu-item (click)="update(board)"><mat-icon>edit</mat-icon><span>Edit</span></button>
+                        <button mat-menu-item (click)="deleteBoard(board)"><mat-icon>delete</mat-icon><span>Delete</span></button>
+                    </mat-menu>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <h1>My personal boards</h1>
+    <p *ngIf='boards.length==0' style="padding-left: 15px; font-size: 18px;">Click
+        <button mat-button style="padding: 2px 2px; font-size: 18px; color: green;" (click)="create()">HERE</button > to create a table</p>
+    <!-- <div *ngIf=' boards.count()==0 '>Vous n'avez pas </div> -->
+    <div class="card-container">
+        <mat-card class="card" *ngFor='let board of boards '>
+            <div class="flex">
+            <div>
+                <a class="nav-link text-dark" [routerLink]="['/show-board/'+board.boardId]">
+                    <mat-card-content class="card-content">
+                        <p>{{ board.title }}</p>
+                    </mat-card-content>
+                </a>
+            </div>
+            <div>
+            <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>toc</mat-icon></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/show-board/'+board.boardId]"><mat-icon>remove_red_eye</mat-icon><span>show</span></button>
+            <button mat-menu-item (click)="update(board)"><mat-icon>edit</mat-icon><span>Edit</span></button>
+            <button mat-menu-item (click)="deleteBoard(board)"><mat-icon>delete</mat-icon><span>Delete</span></button>
+        </mat-menu>
+
+</div>
+</div>
+</mat-card>
+</div>
+
+<h1 *ngIf='collaboratorBoards.length!=0'>My collaborations</h1>
+<div class="card-container">
+    <mat-card class="card" *ngFor='let board of collaboratorBoards '>
+        <div class="flex">
+            <div>
+                <a class="nav-link text-dark" [routerLink]="['/show-board/'+board.boardId]">
+                    <mat-card-content class="card-content">
+                        <p>{{ board.title }}</p>
+                    </mat-card-content>
+                </a>
+            </div>
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>toc</mat-icon></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item [routerLink]="['/show-board/'+board.boardId]"><mat-icon>remove_red_eye</mat-icon><span>show</span></button>
+                    <button mat-menu-item *ngIf="currentUser.role == 2" (click)="update(board)"><mat-icon>edit</mat-icon><span>Edit</span></button>
+                    <button mat-menu-item *ngIf="currentUser.role == 2" (click)="deleteBoard(board)"><mat-icon>delete</mat-icon><span>Delete</span></button>
+                </mat-menu>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+</div>

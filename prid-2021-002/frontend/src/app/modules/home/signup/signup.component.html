@@ -1,0 +1,57 @@
+<h1 class="title-form">{{ 'SIGNUP.TITLE' | translate }}</h1>
+<form id="addCodeForm" class="form center" [formGroup]="form" novalidate>
+    <div class="form">
+        <mat-form-field hintLabel="{{ 'SIGNUP.MAX' | translate }}" appareance="outline">
+            <input matInput formControlName="pseudo" placeholder=" {{ 'SIGNUP.PSEUDO' | translate }} " required>
+            <mat-error class="field-error" *ngIf="form.get('pseudo').hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('pseudo').hasError('minLength')">Minimum length is 3</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('pseudo').hasError('maxLength')">Maximum length is 10</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('pseudo').hasError('pattern')">Bad format</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('pseudo').hasError('pseudoUsed')">Pseudo already in use</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="{{ 'SIGNUP.MAX' | translate }}" appareance="outline">
+            <input matInput formControlName="password" placeholder=" {{ 'SIGNUP.PASSWORD' | translate }} " [type]="hide1 ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error class="field-error" *ngIf="form.get('password').hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('password').hasError('minLength')">Minimum length is 3</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('password').hasError('maxLength')">Maximum length is 10</mat-error>
+        </mat-form-field>
+        <mat-form-field appareance="outline">
+            <input matInput formControlName="passwordConfirm" placeholder=" {{ 'SIGNUP.CONFIRMPASSWORD' | translate }} " [type]="hide2 ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error class="field-error" *ngIf="form.get('passwordConfirm').hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('passwordConfirm').hasError('equalPassword')">passwords must be same</mat-error>
+        </mat-form-field>
+        <mat-form-field appareance="outline">
+            <input matInput formControlName="email" placeholder=" {{ 'SIGNUP.EMAIL' | translate }} " required>
+            <mat-error class="field-error" *ngIf="form.get('email').hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="form.get( 'email').hasError( 'pattern') ">Please enter a valid email address</mat-error>
+            <mat-error class="field-error" *ngIf="form.get( 'email').hasError( 'emailUsed') ">Email already in use</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="{{ 'SIGNUP.MAXI' | translate }}" appareance="outline">
+            <input matInput formControlName="firstName" placeholder=" {{ 'SIGNUP.FIRSTNAME' | translate }} " required>
+            <mat-error class="field-error" *ngIf="form.get('firstName').hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('firstName').hasError('minLength')">Minimum length is 3</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('firstName').hasError('maxLength')">Maximum length is 50</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="{{ 'SIGNUP.MAXI' | translate }}" appareance="outline">
+            <input matInput formControlName="lastName" placeholder=" {{ 'SIGNUP.LASTNAME' | translate }} " required>
+            <mat-error class="field-error" *ngIf="form.get('lastName').hasError('required')">Required</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('lastName').hasError('minLength')">Minimum length is 3</mat-error>
+            <mat-error class="field-error" *ngIf="form.get('lastName').hasError('maxLength')">Maximum length is 50</mat-error>
+        </mat-form-field>
+        <mat-form-field appareance="outline">
+            <input matInput formControlName="birthDate" [matDatepicker]="picker " placeholder=" {{ 'SIGNUP.BIRTHDATE' | translate }} ">
+            <mat-datepicker-toggle matSuffix [for]="picker "></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error class=" field-error " *ngIf="form.get( 'birthDate').hasError( 'futureBorn') ">vous devez entrer une date inferieur à celle d'aujourd'hui</mat-error>
+            <mat-error class="field-error " *ngIf="form.get( 'birthDate').hasError( 'toYoung') ">Vous devez avoir au moins 18 ans</mat-error>
+        </mat-form-field>
+        <div class="center ">
+            <button type="submit " mat-button [disabled]="form.pristine || form.invalid || form.pending " (click)="sauver() " class="buttonForm">
+              {{ 'ACTIONS.SIGNUP' | translate }}
+            </button>
+        </div>
+    </div>
+</form>
+<!-- <app-footer></app-footer> -->

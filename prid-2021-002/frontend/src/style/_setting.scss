@@ -1,0 +1,42 @@
+    @mixin center-flex-align {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    @mixin rigth-flex-align {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: left;
+    }
+    
+    @mixin form-align {
+        width: 40%;
+        display: grid;
+        grid-row-gap: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    @mixin width-button {
+        font-size: 14;
+    }
+    
+    @mixin button-align {
+        display: block;
+        font-weight: bold;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    @mixin title-form-align {
+        text-align: center;
+        font-weight: bold;
+        font-size: 34px;
+        margin-top: 35px;
+        margin-bottom: 35px;
+    }

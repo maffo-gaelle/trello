@@ -1,0 +1,12 @@
+<form id="frm" class="form" [formGroup]="frm" novalidate>
+    <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Search" [formControl]="search" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-select [formControl]="ctlSearch" multiple>
+                <mat-option *ngFor="let r of results" [value]="r">{{r}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>

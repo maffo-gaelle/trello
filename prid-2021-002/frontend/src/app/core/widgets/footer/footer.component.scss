@@ -1,0 +1,22 @@
+@import "src/style/_setting";
+@import "src/style/_colors";
+p {
+    color: black;
+    text-align: right;
+    // font-size: 18px;
+    // margin-bottom: 0;
+    padding: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 40px;
+}
+
+footer {
+    // width: 1300px;
+    height: 40px;
+    margin-top: 60px;
+    background: linear-gradient(to right, blue, #03a9f4, white);
+    // background-color: $colorCardHeader;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.5;
+}

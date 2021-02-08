@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>
+    <mat-icon>credit_card</mat-icon>"{{ data.card.title }}" card
+</h2>
+<p>Dans la liste {{ list?.title }}</p>
+<mat-dialog-content class="mat-typography">
+    <h3>
+        <mat-icon>supervisor_account</mat-icon>Members
+    </h3>
+    <p>
+        <span *ngFor="let m of data.card.collaborators" style="padding-right: 8px">{{ m.pseudo }}</span>
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

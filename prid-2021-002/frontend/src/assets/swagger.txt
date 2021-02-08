@@ -1,0 +1,36 @@
+Intégration et configuration de Swagger à une application ASP.NET Core
+
+L'intégration de Swagger à son application consiste en l'installation du package NuGet Swashbuckle.AspNetCore. 
+Ce package permet l'ajout de trois composants à votre application :
+
+    1) Swashbuckle.AspNetCore.Swagger : ce composant permet d'exposer les objets SwaggerDocument comme une API JSON. 
+        Ce dernier utilise une implémentation de ISwaggerProvider pour générer des documents Swagger qui seront par la 
+        suite sérialisés en données JSON ;
+    2) Swashbuckle.AspNetCore.SwaggerGen : ce composant utilise le conteneur d'injection de dépendances de ASP.NET Core 
+        pour enregistrer une implémentation de ISwaggerProvider. Elle sera utilisée pour générer des SwaggerDocument, 
+        en fonction du contrôleur, de la route et du modèle de données ;
+    3) Swashbuckle.AspNetCore.SwaggerUI : composant utilisé pour générer une version intégrée de swagger-ui. 
+        Il s'agit d'une interface utilisateur qui consomme un Endpoint d'API retournant des données Swagger au format JSON. 
+        Ce composant exploite ces données pour offrir une documentation interactive, qui permettra en plus de tester le service.
+
+Pour installer Swashbuckle.AspNetCore, vous devez utiliser le terminal intégré de Visual Studio Code ou l'invite de 
+    commande (dans le dossier contenant le fichier .csproj) et exécuter la commande suivante :
+            dotnet add package Swashbuckle.AspNetCore
+
+Une fois le package installé, vous devez configurer votre application pour utiliser ce dernier. La configuration de Swagger se fait en deux étapes :
+
+    l'enregistrement du service dans le « services collection » ;
+    l'intégration du middleware Swagger dans le pipeline du Framework.
+
+Suite à l'installation du package Swashbuckle.AspNetCore, une nouvelle extension a été ajoutée pour permettre l'enregistrement du générateur de la documentation Swagger dans la liste des services.
+
+Pour enregistrer le service, vous devez éditer le fichier Startup.cs et modifier la méthode ConfigureServices. À l'enregistrement du service, vous devez définir la version de votre API, ainsi que le titre :
+public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+ 
+            services.AddSwaggerGen(c =>
+          {
+              c.SwaggerDoc("v1", new Info { Title = "SwaggerDemo", Version = "v1" });
+           });
+        }

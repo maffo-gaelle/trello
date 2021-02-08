@@ -1,0 +1,36 @@
+<div class="page">
+    <h1 style="font-family: fantasy; padding-left: 35px;">{{ title }}</h1>
+    <div class="flex">
+        <div style="font-family: fantasy; padding: 15px 0px 15px 47px;">
+            <mat-form-field>
+                <input matInput (keyup)="filterChanged($event.target.value)" placeholder="Filter" appSetFocus>
+            </mat-form-field>
+        </div>
+        <div style="padding: 15px 10px 15px 47px;">
+            <div>
+                <button mat-raised-button class="largeButton" (click)="create()">Add new User</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container">
+        <mat-card class="card" *ngFor='let user of users'>
+            <mat-card-header class="card-header">
+                <div mat-card-avatar class="example-header-image" [style.background-size]="'cover'" [style.background-image]="'url('+ (user.picturePath || 'uploads/unknown-user.jpg') + ')'"></div>
+                <mat-card-title>{{ user.pseudo }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="card-content">
+                <p>Email: {{ user.email }}</p>
+                <p>First Name: {{ user.firstName }}</p>
+                <p>LastName: {{ user?.lastName }}</p>
+                <p *ngIf='showBirthdate(user)'>BirthDate: {{ user.birthDate }}</p>
+                <p>Role: {{ user.roleAsString }}</p>
+            </mat-card-content>
+            <mat-card-actions class="footer">
+                <button mat-icon-button tabindex="-1"><mat-icon (click)="edit(user)">edit</mat-icon></button>
+                <button mat-icon-button tabindex="-1"><mat-icon (click)="deleteUser(user)">delete</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+</div>

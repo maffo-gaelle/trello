@@ -1,0 +1,70 @@
+<header class="bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
+        <div class="container" *ngIf="!currentUser">
+            <div class="navbar-collapse collapse d-sm-inline-flex " [ngClass]="{ show: isExpanded }">
+                <ul class="navbar-nav flex-grow mr-auto image-accueil">
+                    <li class="image-accueil">
+                        <a class="nav-item" [routerLink]="['/']">
+                            <img src="assets/TrelloImage.png" alt="image trello" width="75" height="60">
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" *ngIf="!currentUser">
+                        <button class="auth" [routerLinkActive]='["link-active"]' mat-stroked-button [routerLink]='["/login"]'>Login</button>
+                    </li>
+                    <li class="nav-item" *ngIf="!currentUser">
+                        <button class="auth" mat-stroked-button [routerLinkActive]='["link-active"]' [routerLink]='["/signup"]'>Signup</button>
+                    </li>
+                    <!-- <li class="nav-item" [routerLinkActive]='["link-active"]' *ngIf="currentUser">
+                        <span class="example-header-image" [style.background-size]="'cover'" [style.background-image]="'url('+ (currentUser.picturePath || 'uploads/unknown-user.jpg') + ')'"></span>
+                        <span class="text-info">{{ currentUser.pseudo }}</span>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="container" *ngIf="currentUser">
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="navbar-collapse collapse d-sm-inline-flex " [ngClass]="{ show: isExpanded }">
+                <ul class="navbar-nav flex-grow mr-auto image-connect">
+                    <li>
+                        <a class="nav-item" [routerLink]="['/boardlist']">
+                            <img src="assets/TrelloImage.png" alt="image trello" width="75" height="60">
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item btn-user" [routerLinkActive]="['link-connect-active']" *ngIf="currentUser.role == 2">
+                        <a class="nav-link" [routerLink]="['/userlist']">Users</a>
+                    </li>
+
+                    <li class="nav-item btn-team" [routerLinkActive]="['link-connect-active']">
+                        <a class="nav-link" [routerLink]="['/teamlist']">Teams</a>
+                    </li>
+
+                    <li class="current-img">
+                        <button mat-icon-button class="btn-img" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon *ngIf="currentUser.picturePath == null">account_circle</mat-icon>
+                                <img *ngIf="currentUser.picturePath != null" [src]=" currentUser.picturePath " width="20" style="border-radius: 50%;" />
+                              </button>
+                        <mat-menu #menu="matMenu">
+                            <p mat-menu-item>
+                                <mat-icon>person</mat-icon><span>{{ currentUser.pseudo }}</span></p>
+                            <button mat-menu-item (click)="edit(currentUser)"><mat-icon>edit</mat-icon><span>edit profil</span></button>
+                            <button mat-menu-item (click)="create()"><mat-icon>add</mat-icon><span>Add new board</span></button>
+                            <button mat-menu-item><mat-icon>group</mat-icon><span>Add new team</span></button>
+                            <button mat-menu-item [routerLink]='["/logged-out "]' (click)='logout()'><mat-icon>power_settings_new</mat-icon><span>logout</span></button>
+                        </mat-menu>
+                    </li>
+                    <li class="nav-item btn-home">
+                        <a class="nav-link" [routerLink]="['/boardlist']" [routerLinkActive]="['link-connect-active']" title="Boards">
+                            <mat-icon>home</mat-icon>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

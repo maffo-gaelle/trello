@@ -1,0 +1,18 @@
+<form id="frm" class="form" [formGroup]="frm" novalidate>
+    <h1 class="header">add user at team</h1>
+    <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="search" [formControl]="ctlsearch">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Choice a user</mat-label>
+            <mat-select required>
+                <mat-option *ngFor="let res of resulta" [value]="res.value">{{res.viewValue}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="footer ">
+            <button type="submit " mat-button form="frm " [disabled]="frm.pristine || frm.invalid || frm.pending " (click)="update() ">{{!isNew ? 'Remove' : 'Add'}}</button>
+            <button type="reset " mat-button (click)="cancel() ">Cancel</button>
+        </div>
+    </div>
+</form>

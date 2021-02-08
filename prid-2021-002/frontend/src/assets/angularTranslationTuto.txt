@@ -1,0 +1,60 @@
+1)   Installer
+         npm install @ ngx-translate/core --save
+
+2) Importez le TranslateModule: TranslateModule.forRoot()
+      vous pouvez utiliser ngx-translate dans votre projet Angular. Vous devez importer TranslateModule.forRoot()dans la racine NgModule de votre application à savoir ici le AppModule
+
+          La forRoot méthode statique est une convention qui fournit et configure des services en même temps. Assurez-vous d'appeler cette méthode uniquement dans le
+          module racine de votre application, la plupart du temps appelée AppModule. Cette méthode vous permet de configurer le TranslateModuleen spécifiant un chargeur, un analyseur et / ou un gestionnaire de traductions manquant.
+
+3) Si vous utilisez un SharedModule,que vous importez dans plusieurs autres modules de fonctionnalités, vous pouvez exporter le TranslateModule pour vous assurer de ne pas avoir à l'importer dans chaque module.
+    Dans notre projet ici, le sharedModule correspond au WidgetModule. importer et exporter dans le widgetModule TranslateModule; "import { TranslateModule } from '@ngx-translate/core';"
+    Remarque: N'appelez jamais une forRootméthode statique dans le SharedModule. Vous pourriez vous retrouver avec différentes instances du service dans votre arborescence d'injecteurs. Mais vous pouvez utiliser forChild si nécessaire.
+
+4) Définissez le default language pour l'application:
+      @ NgModule ( {
+      imports : [
+          BrowserModule ,
+          TranslateModule.ForRoot({
+              defaultLanguage : 'en'
+          })
+          ] ,
+          providers : [
+          ] ,
+          bootstrap : [ AppComponent ]
+      } )
+      export class  AppModule { }
+
+5) Lancez le TranslateServicepour votre application: dans le AppComponent
+
+      import {Component} from '@angular/core';
+      import {TranslateService} from '@ngx-translate/core';
+
+      @Component({
+          selector: 'app',
+          template: `
+              <div>{{ 'HELLO' | translate:param }}</div>
+          ` ou './app.component.html'
+      })
+      export class AppComponent {
+          //param = {value: 'world'};
+          title = 'app';
+
+          constructor(
+              public translate: TranslateService,
+              public titleService: Title,
+              public router: Router
+          ) {
+              // this language will be used as a fallback when a translation isn't found in the current language
+              translate.setDefaultLang('en');
+
+              // the lang to use, if the lang isn't available, it will use the current loader to get them
+              translate.use('en');
+          }
+      }
+
+3)   Créer une constante appélée locale dans le fichier fr.ts de i18n
+4)   Dans le app.component.ts,
+        -on fait une injection du Router, du TranslationService et du Title
+        -Dans le corps du constructeur, on définit le fichier à utiliser par la classe TranslationService
+        -On fait un subscribe sur le router afin d'obtenir le titre des components pour les afficher dans la barre de navigation

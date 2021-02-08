@@ -1,0 +1,75 @@
+@import "src/style/_setting";
+@import "src/style/_colors";
+.example-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: $colorCardContent;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+    width: 400px;
+    max-width: 100%;
+}
+
+.example-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.card-container {
+    @include rigth-flex-align;
+    overflow-y: hidden;
+}
+
+.car {
+    width: 30%;
+    margin: 5px;
+    height: 700px;
+    background-color: $colorCardContent;
+    // overflow: scroll;
+    // overflow-x: hidden;
+}
+
+.card-list {
+    // width: 23%;
+    margin: 7px;
+    background-color: $colorCardHeader;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-align {
+    display: flex;
+    justify-content: space-around;
+}
+
+button:hover {
+    color: #2274BD;
+    // background-color: #909497;
+}
+
+.icon-card:hover {
+    color: #424949;
+}

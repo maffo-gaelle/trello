@@ -1,0 +1,110 @@
+@import "src/style/_setting";
+@import "src/style/_colors";
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    background-color: #e1f5fe;
+}
+
+html {
+    font-size: 14px;
+    background-color: #e1f5fe;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+header {
+    // background-color: gray;
+    // color: white;
+    font-weight: bold;
+    position: static;
+}
+
+.image-accueil {
+    position: relative;
+    margin-left: -110px;
+}
+
+.image-connect {
+    position: relative;
+    margin-left: -210px;
+}
+
+button.auth {
+    color: white;
+    font-size: 18px;
+    padding: 8px;
+    margin-left: 9px;
+    border-color: white !important;
+    width: 100px;
+}
+
+button.auth:hover {
+    color: $colorCardHeader;
+    background-color: #D0D3D4;
+}
+
+button:hover {
+    color: $colorCardHeader;
+    background-color: #D0D3D4;
+}
+
+// back font .box-shadow {
+//     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+// }
+.btn-img {
+    position: absolute;
+    top: 10px;
+    right: 90px;
+}
+
+.current-img {
+    margin-left: 5px;
+}
+
+.btn-home {
+    position: absolute;
+    top: 10px;
+    right: 120px;
+    margin-right: 5px;
+}
+
+.btn-home a:hover {
+    color: $colorCardHeader !important;
+}
+
+.btn-team {
+    position: absolute;
+    top: 10px;
+    right: 160px;
+}
+
+.btn-user {
+    position: absolute;
+    top: 10px;
+    right: 220px;
+}
+
+.link-active {
+    color: $colorCardHeader !important;
+    background-color: #D0D3D4;
+}
+
+a:hover {
+    color: $colorCardHeader !important;
+}
+
+.link-connect-active a {
+    color: $colorCardHeader !important;
+    // background-color: #D0D3D4;
+}
+
+.link-connect-active mat-icon {
+    color: $colorCardHeader !important;
+    // background-color: #D0D3D4;
+}

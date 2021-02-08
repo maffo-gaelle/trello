@@ -1,0 +1,22 @@
+<div class="dialog" *ngIf="!this.data.add">
+    <h1 mat-dialog-title> Remove "{{ this.data.user.firstName }} {{ this.data.user.lastName }}" from board</h1>
+    <div mat-dialog-content>
+        <p>are you sure you want to delete this collaborator from this board and all the cards of which he is the author?</p>
+        <p style="color: red"> this operation being irreversible</p>
+    </div>
+    <div mat-dialog-actions class="dialog-button">
+        <button mat-button (click)="onNoClick()" style="color: green">Cancel</button>
+        <button mat-button (click)="onClick()" cdkFocusInitial style="color: red">Remove</button>
+    </div>
+</div>
+<div class="dialog" *ngIf="this.data.add">
+    <h1 mat-dialog-title><span style="color: red"> permanently delete "{{ this.data.user.firstName }} {{ this.data.user.lastName }}" from your database</span></h1>
+    <div mat-dialog-content>
+        <p>are you sure you want to delete this user from your database and thus erase all its traces</p>
+        <p style="color: red"> this operation being irreversible</p>
+    </div>
+    <div mat-dialog-actions class="dialog-button">
+        <button mat-button (click)="onNoClick()" style="color: green">Cancel</button>
+        <button mat-button (click)="onClick()" cdkFocusInitial style="color: red">Delete</button>
+    </div>
+</div>
